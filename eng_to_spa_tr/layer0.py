@@ -1,5 +1,5 @@
 import re
-import pycurl
+import urllib2
 from StringIO import StringIO
 import sys
 import argparse
@@ -38,17 +38,9 @@ def get_all_text_from_file(file_name):
 def get_all_matches(src_text, regular_ex):
 	result =re.findall(regular_ex, src_text)
 	return result
-	
-def compile_translate_regx():
-	result =re.compile('ltr ">([^\r\n]+)<.*[\r\n]*(.*pos ">\[([\w/]+)\])?', re.UNICODE|re.MULTILINE)
-	return result
 
 def compile_dict_translate_regx(tr_text):
 	result= re.compile('^(\s*>>\s*{}\s*\|[^\r\n]*[\r\n]+[^<]+)'.format(tr_text), re.UNICODE|re.MULTILINE)
-	return result
-
-def compile_pronc_regx():
-	result =re.compile('class="SEP PRON-before"> /</span>([^<]+)<' , re.UNICODE|re.MULTILINE)
 	return result
 	
 def compose_url(url, src_text):
@@ -56,16 +48,12 @@ def compose_url(url, src_text):
 	return result
 	
 def get_text_from_url(url, regx):
-  buffer = StringIO()
-  c = pycurl.Curl()
-  c.setopt(c.URL, url)
-  c.setopt(c.FOLLOWLOCATION, True)
-  c.setopt(c.WRITEDATA, buffer)
-  c.perform()
-  c.close()
-  body = buffer.getvalue()
-  result= re.findall(regx, body)
-  return result
+	hdr= {'User-Agent': 'Mozilla/5.0'}
+	req= urllib2.Request(url, headers=hdr)
+	response= urllib2.urlopen(req)	
+	html= response.read()
+	result= re.findall(regx, html)
+	return result
 	
 def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 
@@ -74,13 +62,21 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 		return
 	
 	word_tr_sort= sorted(text_tr, key=lambda tup: (tup[2]))
-	pronc= ""
-	if len(word_pronc) > 0:
-		pronc= word_pronc[0]
+	pronc0= ""
+	pronc1= ""
+	pronc2= ""
+	if len(word_pronc) >= 1:
+		pronc0= word_pronc[0]
+	
+	if len(word_pronc) >= 2:
+		pronc1= word_pronc[1]
+	
+	if len(word_pronc) >= 3:
+		pronc2= word_pronc[2]
 	
 	if len(word_tr_sort) > 0:
 		with open(dict_src, "a") as myfile:
-			myfile.write(">>{}|{}\n".format(text_src, pronc))
+			myfile.write(">>{}| {} {} {}\n".format(text_src, pronc0, pronc1, pronc2))
 			for token in word_tr_sort:
 				print_debug(token[0])
 				print_debug(token[2])
