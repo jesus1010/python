@@ -48,7 +48,7 @@ def compile_dict_translate_regx(tr_text):
 	return result
 
 def compile_pronc_regx():
-	result =re.compile('class="pron"> \(([^<]+)<' , re.UNICODE|re.MULTILINE)
+	result =re.compile('class="SEP PRON-before"> /</span>([^<]+)<' , re.UNICODE|re.MULTILINE)
 	return result
 	
 def compose_url(url, src_text):
@@ -59,6 +59,7 @@ def get_text_from_url(url, regx):
   buffer = StringIO()
   c = pycurl.Curl()
   c.setopt(c.URL, url)
+  c.setopt(c.FOLLOWLOCATION, True)
   c.setopt(c.WRITEDATA, buffer)
   c.perform()
   c.close()
