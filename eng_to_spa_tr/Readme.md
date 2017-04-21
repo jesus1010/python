@@ -16,8 +16,8 @@ Python script to get translation/s and pronunciation of word or a simple text.
 * Module jproperties
 
 # To run the application
-$ python search_dict.py dict.txt urls.properties text_to_searh
+$ python search_dict.py dict.txt urls.properties text_to_search
 
 *Note:
-  *text_to_searh, simple word like gold or two words like "craft fair" (needs quotes)
+  *text_to_search, simple word like gold or two words like "craft fair" (needs quotes)
 
