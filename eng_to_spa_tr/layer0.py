@@ -84,6 +84,6 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 			for token in word_tr_sort:
 				print_debug(token[0])
 				print_debug(token[2])
-				myfile.write("  {}:{}\n".format(token[0], token[2]))
+				myfile.write("  {}{}\n".format(token[0], token[2]))
 			myfile.write("<<\n")
 #<<

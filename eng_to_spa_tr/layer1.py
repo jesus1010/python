@@ -1,4 +1,3 @@
-
 import layer0 as L0
 from jproperties import Properties
 
@@ -11,6 +10,8 @@ def init_enviroment(env):
 	env['result']= "***Text not found***"
 	env['url_pronc']=""
 	env['url_tr']=""	
+	env['pattern_pronc']=""
+	env['pattern_tr']=""	
 
 	urls_file= args.urls_file
 	p = Properties()
@@ -19,6 +20,8 @@ def init_enviroment(env):
 
 	env['url_pronc']=p['url_pronc'][0]
 	env['url_tr']=p['url_tr'][0]
+	env['pattern_pronc']=p['pattern_pronc'][0]
+	env['pattern_tr']=p['pattern_tr'][0]
 
 def show_head_banner():
 	print("------------------------------")
@@ -36,12 +39,12 @@ def translate_text(env):
 #>get pronunciation from url
 		url= L0.compose_url(env['url_pronc'], env['tr_text'])
 		print "Pronunciation url:%s" % url
-		regx= L0.compile_pronc_regx()
+		regx= env['pattern_pronc']
 		pronc_result= L0.get_text_from_url(url, regx)
 #>get translation from url
 		url= L0.compose_url(env['url_tr'], env['tr_text'])
 		print "Translation url:%s" % url
-		regx= L0.compile_translate_regx()
+		regx= env['pattern_tr']
 		tr_text= L0.get_text_from_url(url, regx)
 		#tr_text= L0.get_all_matches(tr_text, regx)		
 #>update dictionary
@@ -61,7 +64,6 @@ def show_translation(env):
 		print("{}".format(env["result"][0]))	
 	else:
 		print "Text not found"	
-		
 def show_foot_banner():
 	print("------------------------------")
 #<<	
