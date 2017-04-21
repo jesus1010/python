@@ -20,8 +20,10 @@ def init_enviroment(env):
 
 	env['url_pronc']=p['url_pronc'][0]
 	env['url_tr']=p['url_tr'][0]
+	env['url_tr2']=p['url_tr2'][0]
 	env['pattern_pronc']=p['pattern_pronc'][0]
 	env['pattern_tr']=p['pattern_tr'][0]
+	env['pattern_tr2']=p['pattern_tr2'][0]
 
 def show_head_banner():
 	print("------------------------------")
@@ -46,7 +48,13 @@ def translate_text(env):
 		print "Translation url:%s" % url
 		regx= env['pattern_tr']
 		tr_text= L0.get_text_from_url(url, regx)
-		#tr_text= L0.get_all_matches(tr_text, regx)		
+#>not found translation, try next url
+		if len(tr_text) == 0:
+			url= L0.compose_url(env['url_tr2'], env['tr_text'])
+			print "Translation not found trying next url:%s" % url
+			regx= env['pattern_tr2']
+			tr_text= L0.get_text_from_url(url, regx)
+#<		
 #>update dictionary
 		L0.update_dictionary(env['tr_text'], tr_text, pronc_result, env['dict_src'])
 #<
