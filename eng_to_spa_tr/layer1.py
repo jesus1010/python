@@ -8,7 +8,7 @@ debug=L0.debug
 def init_enviroment(env):
 #-----------------------------
   env['env_init']= False
-  try: 
+  try:
     L0.clear_screen()
     debug(SEP, ">>L1:", "[init_enviroment]:")
 #<get property sources
@@ -27,9 +27,9 @@ def init_enviroment(env):
     env['result']="Not translate"
     env['env_init']= True
 #<
-    debug(SEP, "<<L1:", "[init_enviroment]:") 
+    debug(SEP, "<<L1:", "[init_enviroment]:")
   except Exception as ex:
-    L0.console(ex)  
+    L0.console(ex)
 
 #-----------------------------
 def show_head_banner():
@@ -43,7 +43,7 @@ def translate_text(env):
 #-----------------------------
   if not env["env_init"]:
     return
-    
+
   result = ""
   env["env_tr_ok"]= False
   L0.console("Searching...")
@@ -79,11 +79,11 @@ def translate_text(env):
     dict_data= L0.get_all_text_from_file(env['dict_src'])
     regx= L0.compile_dict_translate_regx(env['tr_text'])
     result =L0.get_all_matches(dict_data, regx)
-  except Exception as ex: 
-    L0.console(ex)  
+  except Exception as ex:
+    L0.console(ex)
 
   env['result']= result
-  env["env_tr_ok"]= True 
+  env["env_tr_ok"]= True
 #<
 
 #-----------------------------
@@ -91,11 +91,11 @@ def show_translation(env):
 #-----------------------------
   if not env["env_tr_ok"]:
     return
-  
+
   if len(env["result"]) > 0:
     L0.console("Found!!")
     L0.console("------------------------------")
-    L0.console("{}".format(env["result"][0]))  
+    L0.console("{}".format(env["result"][0]))
   else:
     L0.console("Text not found")
 

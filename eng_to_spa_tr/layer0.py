@@ -17,14 +17,14 @@ def debug(sep, tag, text):
 
 def console(text):
   print text
-  
+
 def get_cmd_arg():
   parser = argparse.ArgumentParser()
   parser.add_argument("text_to_translate", type=str,
                     help="Text to translate requited.")
   parser.add_argument("-v", "--verbose", action="store_true",
                     help="increase output verbosity")
-  return parser.parse_args()  
+  return parser.parse_args()
 
 def clear_screen():
   os.system('cls')  # For Windows
@@ -33,7 +33,7 @@ def clear_screen():
 def get_properties_mng():
   p = Properties()
   with open("config.properties", "rb") as f:
-    p.load(f, "utf-8")    
+    p.load(f, "utf-8")
   return p
 
 def get_all_text_from_file(file_name):
@@ -50,19 +50,19 @@ def get_all_matches(src_text, regular_ex):
 def compile_dict_translate_regx(tr_text):
   result= re.compile('^(\s*>>\s*{}\s*\|[^\r\n]*[\r\n]+[^<]+)'.format(tr_text), re.UNICODE|re.MULTILINE)
   return result
-  
+
 def compose_url(url, src_text):
   result= url.format(src_text.replace(" ","+"))
   return result
-  
+
 def get_text_from_url(url, regx):
   hdr= {'User-Agent': 'Mozilla/5.0'}
   req= urllib2.Request(url, headers=hdr)
-  response= urllib2.urlopen(req)  
+  response= urllib2.urlopen(req)
   html= response.read()
   result= re.findall(regx, html)
   return result
-  
+
 def update_dictionary(text_src, text_tr, word_pronc, dict_src):
   if len(text_tr) == 0:
     console("Translated text is empty, not updated dicctionary")
@@ -70,7 +70,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 
   if not isinstance(text_tr[0], tuple):
     text_tr= set(text_tr)
-    
+
   pronc= ""
   if len(word_pronc) >= 1:
     pronc= word_pronc[0]
