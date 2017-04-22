@@ -79,8 +79,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
     myfile.write(">>{}|/{}/\n".format(text_src, pronc))
     for token in text_tr:
       if isinstance(token, tuple):
-        if token[2] != "":
-          myfile.write("  {}:{}\n".format(token[0], token[2].replace(" ", "")))
+        myfile.write("  {}:{}\n".format(token[0], token[2].replace(" ", "")))
       else:
         myfile.write("  {}\n".format(token))
     myfile.write("<<\n")

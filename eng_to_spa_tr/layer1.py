@@ -65,7 +65,6 @@ def translate_text(env):
       L0.console("Translation url: %s" % url)
       regx= env['pattern_tr']
       tr_text= L0.get_text_from_url(url, regx)
-
 #>not found translation, try next url
       if len(tr_text) == 0:
         url= L0.compose_url(env['url_tr2'], env['tr_text'])
