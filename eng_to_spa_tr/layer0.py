@@ -56,6 +56,7 @@ def get_text_from_url(url, regx):
 	return result
 	
 def update_dictionary(text_src, text_tr, word_pronc, dict_src):
+
 	if len(text_tr) == 0:
 		print_debug("Translate text is empty")
 		return
@@ -63,26 +64,17 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 	if not isinstance(text_tr[0], tuple):
 		text_tr= set(text_tr)
 		
-	pronc0= ""
-	pronc1= ""
-	pronc2= ""
+	pronc= ""
 	if len(word_pronc) >= 1:
-		pronc0= word_pronc[0]
+		pronc= word_pronc[0]
 	
-	if len(word_pronc) >= 2:
-		pronc1= word_pronc[1]
-	
-	if len(word_pronc) >= 3:
-		pronc2= word_pronc[2]
-	
-	if len(text_tr) > 0:
-		with open(dict_src, "a") as myfile:
-			myfile.write(">>{}|{} {} {}\n".format(text_src, pronc0, pronc1, pronc2))
-			for token in text_tr:
-				if isinstance(token, tuple):
-					print_debug(token[2])
+	with open(dict_src, "a") as myfile:
+		myfile.write(">>{}|{}\n".format(text_src, pronc))
+		for token in text_tr:
+			if isinstance(token, tuple):
+				if token[2] != "":
 					myfile.write("  {}:{}\n".format(token[0], token[2]))
-				else:
-					myfile.write("  {}\n".format(token))
-			myfile.write("<<\n")
+			else:
+				myfile.write("  {}\n".format(token))
+		myfile.write("<<\n")
 #<<
