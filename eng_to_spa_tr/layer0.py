@@ -65,7 +65,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 		pronc= word_pronc[0]
 #>open dicctionary and update
 	with open(dict_src, "a") as myfile:
-		myfile.write(">>{}|/{}/\n".format(text_src, pronc))
+		myfile.write(">>{}|{}\n".format(text_src, pronc))
 		for token in text_tr:
 			if isinstance(token, tuple):
 				if token[2] != "":

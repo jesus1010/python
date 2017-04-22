@@ -8,7 +8,7 @@ Python script to get translation/s and pronunciation of word or a simple text.
 # Requirements
 * Python >=2.7.9
 * Module re
-* Module pycurl
+* urllib2
 * Module StringIO
 * Module sys
 * Module argparse
@@ -16,7 +16,7 @@ Python script to get translation/s and pronunciation of word or a simple text.
 * Module jproperties
 
 # To run the application
-$ python search_dict.py dict.txt urls.properties text_to_search
+$ python search_dict.py text_to_search
 
 *Note:
   *text_to_search, simple word like gold or two words like "craft fair" (needs quotes)
