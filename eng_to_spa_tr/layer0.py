@@ -6,11 +6,11 @@ import argparse
 import os
 from jproperties import Properties
 
-__debug_flag= True
+__debug_flag= False
 L1_TAB=""
 L0_TAB="  "
 
-#>>LAYER 0------------------------------------------
+#>>LAYER 0
 def debug(sep, tag, text):
   if __debug_flag:
     print sep + tag + text
@@ -65,7 +65,7 @@ def get_text_from_url(url, regx):
   
 def update_dictionary(text_src, text_tr, word_pronc, dict_src):
   if len(text_tr) == 0:
-    print_debug("Translate text is empty")
+    console("Translated text is empty, not updated dicctionary")
     return
 
   if not isinstance(text_tr[0], tuple):
@@ -76,7 +76,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
     pronc= word_pronc[0]
 #>open dicctionary and update
   with open(dict_src, "a") as myfile:
-    myfile.write(">>{}|{}\n".format(text_src, pronc))
+    myfile.write(">>{}|/{}/\n".format(text_src, pronc))
     for token in text_tr:
       if isinstance(token, tuple):
         if token[2] != "":
