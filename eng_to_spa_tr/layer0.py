@@ -14,10 +14,6 @@ def print_debug(text):
 
 def get_cmd_arg():
 	parser = argparse.ArgumentParser()
-	parser.add_argument("dictionary_src_file", type=str,
-                    help="Dictionary file is required.")
-	parser.add_argument("urls_file", type=str,
-                    help="Properties urls file is required.")
 	parser.add_argument("text_to_translate", type=str,
                     help="Text to translate requited.")
 	parser.add_argument("-v", "--verbose", action="store_true",
@@ -67,14 +63,15 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
 	pronc= ""
 	if len(word_pronc) >= 1:
 		pronc= word_pronc[0]
-	
+#>open dicctionary and update
 	with open(dict_src, "a") as myfile:
-		myfile.write(">>{}|{}\n".format(text_src, pronc))
+		myfile.write(">>{}|/{}/\n".format(text_src, pronc))
 		for token in text_tr:
 			if isinstance(token, tuple):
 				if token[2] != "":
-					myfile.write("  {}:{}\n".format(token[0], token[2]))
+					myfile.write("  {}:{}\n".format(token[0], token[2].replace(" ", "")))
 			else:
 				myfile.write("  {}\n".format(token))
 		myfile.write("<<\n")
+#<
 #<<

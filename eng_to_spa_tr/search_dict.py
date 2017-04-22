@@ -1,20 +1,20 @@
 import layer1 as L1
 
 def run():
-	env={'dict_src':None, 'tr_text':None, 'result':None, 'url_pronc':None, 'url_tr':None}
+	enviroment={}
 
 	#>initialize eviroment
-	L1.init_enviroment(env)
+	L1.init_enviroment(enviroment)
 	#<
 	#>show head banner
 	L1.show_head_banner()
 	#<
 	#>translate text
-	L1.translate_text(env)
+	L1.translate_text(enviroment)
 	#<
 
 	#>show translation text
-	L1.show_translation(env)
+	L1.show_translation(enviroment)
 	#<
 
 	#>show foot banner

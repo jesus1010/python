@@ -5,7 +5,6 @@ from jproperties import Properties
 def init_enviroment(env):
 	L0.clear_screen()
 	args= L0.get_cmd_arg()
-	env['dict_src']= args.dictionary_src_file
 	env['tr_text']= args.text_to_translate	
 	env['result']= "***Text not found***"
 	env['url_pronc']=""
@@ -13,11 +12,11 @@ def init_enviroment(env):
 	env['pattern_pronc']=""
 	env['pattern_tr']=""	
 
-	urls_file= args.urls_file
 	p = Properties()
-	with open(urls_file, "rb") as f:
+	with open("config.properties", "rb") as f:
 		p.load(f, "utf-8")		
 
+	env['dict_src']=p['default_dict'][0]
 	env['url_pronc']=p['url_pronc'][0]
 	env['url_tr']=p['url_tr'][0]
 	env['url_tr2']=p['url_tr2'][0]
