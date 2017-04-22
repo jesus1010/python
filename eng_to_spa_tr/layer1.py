@@ -1,28 +1,23 @@
 import layer0 as L0
-from jproperties import Properties
 
 #>>LAYER 1------------------------------------------
 def init_enviroment(env):
 	L0.clear_screen()
+
+#<property sources
 	args= L0.get_cmd_arg()
-	env['tr_text']= args.text_to_translate	
-	env['result']= "***Text not found***"
-	env['url_pronc']=""
-	env['url_tr']=""	
-	env['pattern_pronc']=""
-	env['pattern_tr']=""	
-
-	p = Properties()
-	with open("config.properties", "rb") as f:
-		p.load(f, "utf-8")		
-
-	env['dict_src']=p['default_dict'][0]
-	env['url_pronc']=p['url_pronc'][0]
-	env['url_tr']=p['url_tr'][0]
-	env['url_tr2']=p['url_tr2'][0]
-	env['pattern_pronc']=p['pattern_pronc'][0]
-	env['pattern_tr']=p['pattern_tr'][0]
-	env['pattern_tr2']=p['pattern_tr2'][0]
+	prop_mng= L0.get_properties_mng()
+#<
+#>load propeties into enviroment	
+	env['tr_text']=args.text_to_translate
+	env['dict_src']=prop_mng['default_dict'][0]
+	env['url_pronc']=prop_mng['url_pronc'][0]
+	env['url_tr']=prop_mng['url_tr'][0]
+	env['url_tr2']=prop_mng['url_tr2'][0]
+	env['pattern_pronc']=prop_mng['pattern_pronc'][0]
+	env['pattern_tr']=prop_mng['pattern_tr'][0]
+	env['pattern_tr2']=prop_mng['pattern_tr2'][0]
+#<
 
 def show_head_banner():
 	print("------------------------------")

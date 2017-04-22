@@ -4,6 +4,7 @@ from StringIO import StringIO
 import sys
 import argparse
 import os
+from jproperties import Properties
 
 __debug_flag= False
 
@@ -23,6 +24,12 @@ def get_cmd_arg():
 def clear_screen():
 	os.system('cls')  # For Windows
 	os.system('clear')  # For Linux/OS X
+
+def get_properties_mng():
+	p = Properties()
+	with open("config.properties", "rb") as f:
+		p.load(f, "utf-8")		
+	return p
 
 def get_all_text_from_file(file_name):
 	os.system("touch " + file_name)
