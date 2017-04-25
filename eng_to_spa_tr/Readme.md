@@ -20,7 +20,7 @@ $ python search_dict.py text_to_search
 
 Note: text_to_search,
 
-  *simple word like gold,
-  *phrasal verbs like take-off (minus separator)
-  *simple compose words like craft-fair (minus separator)
+* Simple word like gold
+* Phrasal verbs like take-off (minus separator)
+* Simple compose words like craft-fair (minus separator)
 
