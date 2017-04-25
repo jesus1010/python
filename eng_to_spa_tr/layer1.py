@@ -20,11 +20,15 @@ def init_enviroment(env):
     env['url_pronc']=prop_mng['url_pronc'][0]
     env['url_tr']=prop_mng['url_tr'][0]
     env['url_tr2']=prop_mng['url_tr2'][0]
-    env['pattern_pronc']=prop_mng['pattern_pronc'][0]
+    env['pattern_pronc_uk_word']=prop_mng['pattern_pronc_uk_word'][0]
+    env['pattern_pronc_us_word']=prop_mng['pattern_pronc_us_word'][0]
+    env['pattern_pronc_uk_phrasal']=prop_mng['pattern_pronc_uk_phrasal'][0]
+    env['pattern_pronc_us_phrasal']=prop_mng['pattern_pronc_us_phrasal'][0]
     env['pattern_tr']=prop_mng['pattern_tr'][0]
     env['pattern_tr2']=prop_mng['pattern_tr2'][0]
     env['result']="Not translate"
     env['env_init']= True
+    env["env_tr_ok"]= False
 #<
   except Exception as ex:
     L0.console(ex)
@@ -55,14 +59,22 @@ def translate_text(env):
 #>get pronunciation from url
       url= L0.compose_url(env['url_pronc'], env['tr_text'])
       L0.console("Pronunciation url: %s" % url)
-      regx= env['pattern_pronc']
-      pronc_result= L0.get_text_from_url(url, regx)
+
+      urls_regx=[]
+      urls_regx.append((url, env['pattern_pronc_uk_phrasal']))
+      urls_regx.append((url, env['pattern_pronc_us_phrasal']))
+      urls_regx.append((url, env['pattern_pronc_uk_word']))
+      urls_regx.append((url, env['pattern_pronc_us_word']))
+
+      pronc_result= L0.get_first_html_body_from_url(urls_regx)
+      pronc_result= L0.clean_pronc_result(pronc_result)
 
 #>get translation from url
       url= L0.compose_url(env['url_tr'], env['tr_text'])
       L0.console("Translation url: %s" % url)
       regx= env['pattern_tr']
       tr_text= L0.get_text_from_url(url, regx)
+
 #>not found translation, try next url
       if len(tr_text) == 0:
         url= L0.compose_url(env['url_tr2'], env['tr_text'])

@@ -18,6 +18,9 @@ Python script to get translation/s and pronunciation of word or a simple text.
 # To run the application
 $ python search_dict.py text_to_search
 
-*Note:
-  *text_to_search, simple word like gold or two words like "craft fair" (needs quotes)
+Note: text_to_search,
+
+  *simple word like gold,
+  *phrasal verbs like take-off (minus separator)
+  *simple compose words like craft-fair (minus separator)
 

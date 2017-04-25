@@ -63,6 +63,30 @@ def get_text_from_url(url, regx):
   result= re.findall(regx, html)
   return result
 
+def get_first_html_body_from_url(url_regx):
+  hdr= {'User-Agent': 'Mozilla/5.0'}
+
+  result= None
+  for item in url_regx:
+    req= urllib2.Request(item[0], headers=hdr)
+    response= urllib2.urlopen(req)
+    html= response.read()
+    result= re.findall(item[1], html)
+    if len(result) > 0:
+      break
+
+  return result
+
+
+def clean_pronc_result(pronc):
+  result= ""
+  if len(pronc) > 0:
+    result= pronc[0]
+    result= result.replace(" ","")
+    result= result.replace("</span>","")
+    result= result.replace("<spanclass=\"sp\">" ,"")
+  return [result]
+
 def update_dictionary(text_src, text_tr, word_pronc, dict_src):
   if len(text_tr) == 0:
     console("Translated text is empty, not updated dicctionary")
@@ -76,7 +100,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
     pronc= word_pronc[0]
 #>open dicctionary and update
   with open(dict_src, "a") as myfile:
-    myfile.write(">>{}|/{}/\n".format(text_src, pronc))
+    myfile.write(">>{}|/{}\n".format(text_src, pronc))
     for token in text_tr:
       if isinstance(token, tuple):
         myfile.write("  {}:{}\n".format(token[0], token[2].replace(" ", "")))
