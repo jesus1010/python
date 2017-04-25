@@ -10,7 +10,6 @@ def init_enviroment(env):
   env['env_init']= False
   try:
     L0.clear_screen()
-    debug(SEP, ">>L1:", "[init_enviroment]:")
 #<get property sources
     args= L0.get_cmd_arg()
     prop_mng= L0.get_properties_mng()
@@ -27,7 +26,6 @@ def init_enviroment(env):
     env['result']="Not translate"
     env['env_init']= True
 #<
-    debug(SEP, "<<L1:", "[init_enviroment]:")
   except Exception as ex:
     L0.console(ex)
 
