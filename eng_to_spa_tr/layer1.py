@@ -1,5 +1,5 @@
 import layer0 as L0
-
+import locale
 #>>LAYER 1
 SEP= L0.L1_TAB
 debug=L0.debug
@@ -7,6 +7,7 @@ debug=L0.debug
 #-----------------------------
 def init_enviroment(env):
 #-----------------------------
+  locale.setlocale(locale.LC_ALL, 'en_GB.UTF-8')
   env['env_init']= False
   try:
     L0.clear_screen()
@@ -26,6 +27,7 @@ def init_enviroment(env):
     env['pattern_pronc_uk_phrasal']=prop_mng['pattern_pronc_uk_phrasal'][0]
     env['pattern_pronc_us_phrasal']=prop_mng['pattern_pronc_us_phrasal'][0]
     env['pattern_pronc_generic']=prop_mng['pattern_pronc_generic'][0]
+    env['pattern_pronc_generic2']=prop_mng['pattern_pronc_generic2'][0]
     env['pattern_tr']=prop_mng['pattern_tr'][0]
     env['pattern_tr2']=prop_mng['pattern_tr2'][0]
     env['result']="Not translate"
@@ -66,6 +68,7 @@ def translate_text(env):
       urls_regx.append((url, env['pattern_pronc_uk_word']))
       urls_regx.append((url, env['pattern_pronc_us_word']))
       urls_regx.append((url, env['pattern_pronc_generic']))
+      urls_regx.append((url, env['pattern_pronc_generic2']))
 
       pronc_result= L0.get_first_html_body_from_url(urls_regx)
       pronc_result= L0.clean_pronc_result(pronc_result)
@@ -79,10 +82,12 @@ def translate_text(env):
       urls_regx.append((url, regx))
 
       #config  second tr url
+      regx= env['pattern_tr2']
       url= L0.compose_url_for_tr(env['url_tr2'], env['tr_text'])
       urls_regx.append((url, regx))
 
       tr_text= L0.get_first_html_body_from_url(urls_regx)
+      print tr_text
 #<    
 #>update dictionary
       L0.update_dictionary(env['tr_text'], tr_text, pronc_result, env['dict_src'])

@@ -5,6 +5,8 @@ import sys
 import argparse
 import os
 from jproperties import Properties
+from prettytable import PrettyTable
+import unicodedata
 
 __debug_flag= False
 L1_TAB=""
@@ -71,7 +73,7 @@ def get_first_html_body_from_url(url_regx):
   html=""
   for item in url_regx:
     if last_url != item[0]:
-      console("Getting data from url: %s" % item[0])
+      console("%s" % item[0])
       req= urllib2.Request(item[0], headers=hdr)
       response= urllib2.urlopen(req)
       html= response.read()
@@ -96,6 +98,9 @@ def clean_pronc_result(pronc):
   return [result]
 
 def update_dictionary(text_src, text_tr, word_pronc, dict_src):
+  reload(sys)
+  sys.setdefaultencoding('utf8')
+
   if len(text_tr) == 0:
     console("Translated text is empty, not updated dicctionary")
     return
@@ -107,13 +112,22 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
   if len(word_pronc) >= 1:
     pronc= word_pronc[0]
 #>open dicctionary and update
+  dict_formater= PrettyTable(border=False, left_padding_width=2)
+  dict_formater.field_names = ["1", "2"]
+  dict_formater.align["1"]="l"
+  dict_formater.align["2"]="l"
+
   with open(dict_src, "a") as myfile:
+    myfile.write("\n")
     myfile.write(">>{}|/{}/\n".format(text_src, pronc))
     for token in text_tr:
       if isinstance(token, tuple):
-        myfile.write("  {} {}\n".format(token[0], token[2].replace(" ", "")))
+        dict_formater.add_row([token[0] , token[2].replace(" ", "")])
       else:
-        myfile.write("  {}\n".format(token))
-    myfile.write("<<\n")
+        dict_formater.add_row([token[0], ""])
+
+    myfile.write(dict_formater.get_string(header=False))
+    myfile.write("\n")
+    myfile.write("<<")
 #<
 #<<
