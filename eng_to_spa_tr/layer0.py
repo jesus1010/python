@@ -21,11 +21,11 @@ def console(text):
 def get_cmd_arg():
   parser = argparse.ArgumentParser()
   parser.add_argument("config_file", type=str,
-                    help="file with config data")
+                    help='File with config data')
   parser.add_argument("text_to_translate", type=str,
-                    help="Text to translate requited.")
-  parser.add_argument("-v", "--verbose", action="store_true",
-                    help="increase output verbosity")
+                    help="""Simple words like gold, phrasal verbs like turn-off or text like craft-fair (needs - separator)""")
+#  parser.add_argument("--help", action="store_true",
+#                    help="Valid text, simple word like gold, phrasal verb like turn-off, or simple text  craft-fair")
   return parser.parse_args()
 
 def clear_screen():
