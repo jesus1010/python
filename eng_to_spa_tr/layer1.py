@@ -49,7 +49,6 @@ def translate_text(env):
 
   result = ""
   env["env_tr_ok"]= False
-  L0.console("Searching...")
   try:
 #>search dictionary  
     dict_data= L0.get_all_text_from_file(env['dict_src'])
@@ -58,9 +57,8 @@ def translate_text(env):
 
     if len(result) == 0:
 #>get pronunciation from url
+      L0.console(">>Searching pronunciation...")
       url= L0.compose_url(env['url_pronc'], env['tr_text'])
-      L0.console("Pronunciation url: %s" % url)
-
       urls_regx=[]
       urls_regx.append((url, env['pattern_pronc_uk_phrasal']))
       urls_regx.append((url, env['pattern_pronc_us_phrasal']))
@@ -72,17 +70,18 @@ def translate_text(env):
       pronc_result= L0.clean_pronc_result(pronc_result)
 
 #>get translation from url
-      url= L0.compose_url(env['url_tr'], env['tr_text'])
-      L0.console("Translation url: %s" % url)
+      L0.console(">>Searching translation...")
       regx= env['pattern_tr']
-      tr_text= L0.get_text_from_url(url, regx)
+      urls_regx=[]
+      #config main tr url
+      url= L0.compose_url_for_tr(env['url_tr'], env['tr_text'])
+      urls_regx.append((url, regx))
 
-#>not found translation, try next url
-      if len(tr_text) == 0:
-        url= L0.compose_url(env['url_tr2'], env['tr_text'])
-        L0.console("Translation not found trying next url:%s" % url)
-        regx= env['pattern_tr2']
-        tr_text= L0.get_text_from_url(url, regx)
+      #config  second tr url
+      url= L0.compose_url_for_tr(env['url_tr2'], env['tr_text'])
+      urls_regx.append((url, regx))
+
+      tr_text= L0.get_first_html_body_from_url(urls_regx)
 #<    
 #>update dictionary
       L0.update_dictionary(env['tr_text'], tr_text, pronc_result, env['dict_src'])

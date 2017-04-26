@@ -16,7 +16,7 @@ def debug(sep, tag, text):
     print sep + tag + text
 
 def console(text):
-  print text
+  print text.decode("UTF-8")
 
 def get_cmd_arg():
   parser = argparse.ArgumentParser()
@@ -55,22 +55,26 @@ def compose_url(url, src_text):
   result= url.format(src_text.replace(" ","+"))
   return result
 
-def get_text_from_url(url, regx):
-  hdr= {'User-Agent': 'Mozilla/5.0'}
-  req= urllib2.Request(url, headers=hdr)
-  response= urllib2.urlopen(req)
-  html= response.read()
-  result= re.findall(regx, html)
+def compose_url_for_tr(url, src_text):
+  src_text= src_text.replace(" ","")
+  result= url.format(src_text.replace("-","+"))
   return result
 
 def get_first_html_body_from_url(url_regx):
+
   hdr= {'User-Agent': 'Mozilla/5.0'}
 
   result= None
+  last_url=None
+  html=""
   for item in url_regx:
-    req= urllib2.Request(item[0], headers=hdr)
-    response= urllib2.urlopen(req)
-    html= response.read()
+    if last_url != item[0]:
+      console("Getting data from url: %s" % item[0])
+      req= urllib2.Request(item[0], headers=hdr)
+      response= urllib2.urlopen(req)
+      html= response.read()
+      last_url= item[0]
+
     result= re.findall(item[1], html)
     if len(result) > 0:
       break
@@ -84,6 +88,8 @@ def clean_pronc_result(pronc):
     result= pronc[0]
     result= result.replace(" ","")
     result= result.replace("</span>","")
+    result= result.replace("<spanclass=\"sp\">" ,"")
+    result= result.replace("/" ,"")
     result= result.replace("<spanclass=\"sp\">" ,"")
   return [result]
 
@@ -100,7 +106,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
     pronc= word_pronc[0]
 #>open dicctionary and update
   with open(dict_src, "a") as myfile:
-    myfile.write(">>{}|/{}\n".format(text_src, pronc))
+    myfile.write(">>{}|/{}/\n".format(text_src, pronc))
     for token in text_tr:
       if isinstance(token, tuple):
         myfile.write("  {} {}\n".format(token[0], token[2].replace(" ", "")))
