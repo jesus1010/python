@@ -16,10 +16,12 @@ def debug(sep, tag, text):
     print sep + tag + text
 
 def console(text):
-  print text.decode("UTF-8")
+  print text
 
 def get_cmd_arg():
   parser = argparse.ArgumentParser()
+  parser.add_argument("config_file", type=str,
+                    help="file with config data")
   parser.add_argument("text_to_translate", type=str,
                     help="Text to translate requited.")
   parser.add_argument("-v", "--verbose", action="store_true",
@@ -30,9 +32,9 @@ def clear_screen():
   os.system('cls')  # For Windows
   os.system('clear')  # For Linux/OS X
 
-def get_properties_mng():
+def get_properties_mng(config_file):
   p = Properties()
-  with open("config.properties", "rb") as f:
+  with open(config_file, "rb") as f:
     p.load(f, "utf-8")
   return p
 

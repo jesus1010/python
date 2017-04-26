@@ -12,7 +12,8 @@ def init_enviroment(env):
     L0.clear_screen()
 #<get property sources
     args= L0.get_cmd_arg()
-    prop_mng= L0.get_properties_mng()
+    env['config_file']=args.config_file
+    prop_mng= L0.get_properties_mng(env['config_file'])
 #<:
 #>load propeties into enviroment  
     env['tr_text']=args.text_to_translate
