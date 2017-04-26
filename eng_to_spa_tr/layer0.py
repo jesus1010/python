@@ -73,7 +73,7 @@ def get_first_html_body_from_url(url_regx):
   html=""
   for item in url_regx:
     if last_url != item[0]:
-      console("%s" % item[0])
+      console("  %s" % item[0])
       req= urllib2.Request(item[0], headers=hdr)
       response= urllib2.urlopen(req)
       html= response.read()
@@ -124,7 +124,7 @@ def update_dictionary(text_src, text_tr, word_pronc, dict_src):
       if isinstance(token, tuple):
         dict_formater.add_row([token[0] , token[2].replace(" ", "")])
       else:
-        dict_formater.add_row([token[0], ""])
+        dict_formater.add_row([token, ""])
 
     myfile.write(dict_formater.get_string(header=False))
     myfile.write("\n")
