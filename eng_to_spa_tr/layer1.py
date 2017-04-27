@@ -20,6 +20,7 @@ def init_enviroment(env):
     env['tr_text']=args.text_to_translate
     env['dict_src']=prop_mng['default_dict'][0]
     env['url_pronc']=prop_mng['url_pronc'][0]
+    env['url_pronc2']=prop_mng['url_pronc2'][0]
     env['url_tr']=prop_mng['url_tr'][0]
     env['url_tr2']=prop_mng['url_tr2'][0]
     env['url_tr3']=prop_mng['url_tr3'][0]
@@ -30,6 +31,7 @@ def init_enviroment(env):
     env['pattern_pronc_us_phrasal']=prop_mng['pattern_pronc_us_phrasal'][0]
     env['pattern_pronc_generic']=prop_mng['pattern_pronc_generic'][0]
     env['pattern_pronc_generic2']=prop_mng['pattern_pronc_generic2'][0]
+    env['pattern_pronc_generic3']=prop_mng['pattern_pronc_generic3'][0]
     env['pattern_tr']=prop_mng['pattern_tr'][0]
     env['pattern_tr2']=prop_mng['pattern_tr2'][0]
     env['pattern_tr3']=prop_mng['pattern_tr3'][0]
@@ -73,6 +75,9 @@ def translate_text(env):
       urls_regx.append((url, env['pattern_pronc_us_word']))
       urls_regx.append((url, env['pattern_pronc_generic']))
       urls_regx.append((url, env['pattern_pronc_generic2']))
+
+      url= L0.compose_url(env['url_pronc2'], env['tr_text'])
+      urls_regx.append((url, env['pattern_pronc_generic3']))
 
       pronc_result= L0.get_first_html_body_from_url(urls_regx)
       pronc_result= L0.clean_pronc_result(pronc_result)
