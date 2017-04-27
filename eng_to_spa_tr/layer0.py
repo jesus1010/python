@@ -71,6 +71,7 @@ def get_first_html_body_from_url(url_regx):
   result= None
   last_url=None
   html=""
+  index_regx= 1
   for item in url_regx:
     if last_url != item[0]:
       console("  %s" % item[0])
@@ -81,8 +82,10 @@ def get_first_html_body_from_url(url_regx):
 
     result= re.findall(item[1], html)
     if len(result) > 0:
+      #print "Index pattern match: %s" % index_regx
       break
-
+    index_regx = index_regx + 1
+  #print result
   return result
 
 
