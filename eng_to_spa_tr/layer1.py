@@ -45,9 +45,9 @@ def init_enviroment(env):
 #-----------------------------
 def show_head_banner():
 #-----------------------------
-  L0.console("------------------------------")
+  L0.console("--------------------------------------")
   L0.console("TRANSLATIONS(EN->SPA):")
-  L0.console("------------------------------")
+  L0.console("--------------------------------------")
 
 #-----------------------------
 def translate_text(env):
@@ -125,13 +125,15 @@ def show_translation(env):
 
   if len(env["result"]) > 0:
     L0.console("Found!!")
-    L0.console("------------------------------")
+    L0.console("--------------------------------------")
     L0.console("{}".format(env["result"][0]))
   else:
     L0.console("Text not found")
-
+    L0.console("--------------------------------------")
+  L0.console("--------------------------------------")
+  L0.console("Total dict.: [%s]" % L0.get_dict_ocurrences_number(env["dict_src"]))
 #-----------------------------
 def show_foot_banner():
 #-----------------------------
-  L0.console("------------------------------")
+  L0.console("--------------------------------------")
 #<<  

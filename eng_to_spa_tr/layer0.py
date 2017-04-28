@@ -88,6 +88,13 @@ def get_first_html_body_from_url(url_regx):
   #print result
   return result
 
+def get_dict_ocurrences_number(dict_src):
+  dict_txt= ""
+  result= 0
+  with open(dict_src, 'r') as content_file:
+    dict_txt = content_file.read()
+    result= len(re.findall(">>", dict_txt))
+  return result
 
 def clean_pronc_result(pronc):
   result= ""
